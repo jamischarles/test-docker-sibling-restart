@@ -1,0 +1,16 @@
+version: '2'
+services:
+  big_brother:
+    build: big_brother
+    # command: sh -c 'echo "STARTING UP THE APP" && sleep 500 && echo `which docker` && echo "done sleeping. Exiting"'
+    volumes:
+     - .:/code
+     - /var/run/docker.sock:/var/run/docker.sock
+  little_brother:
+    build: little_brother
+    depends_on:
+      - "big_brother"
+    command: sh -c 'echo "STARTING UP THE APP" && sleep 500 && echo "done sleeping. Exiting"'
+    volumes:
+     - .:/code
+
